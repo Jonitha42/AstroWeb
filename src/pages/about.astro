@@ -1,4 +1,26 @@
 ---
+import Footer from "../components/Footer.astro";
+import Navigation from "../components/Navigation.astro";
+import "../styles/global.css";
+
+const pageTitle = "Sobre mi";
+
+const identity = {
+  firtsName: "Jonathan",
+  country: "Argentina",
+  occupation: "Dev",
+  hobbies: ["Gim", "Futbol", "Tocar Guitarra"],
+};
+
+const skills = ["HTML", "CSS", "Javascript", "Astro", "Tailwind", "Java"];
+
+const happy = true;
+const finished = false;
+const goal = 3;
+
+const skillColor = "navy";
+const fontWeight = "bold";
+const textCase = "uppercase";
 ---
 
 <html lang="en">
@@ -7,18 +29,54 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <title>{pageTitle}</title>
+
+    <style define:vars={{ skillColor, fontWeight, textCase }}>
+      .skill {
+        color: var(--skillColor);
+        font-weight: var(--fontWeight);
+        text-transform: var(--textCase);
+      }
+    </style>
   </head>
   <body>
-    <a href="/">Inicio</a>
-    <a href="/about">Sobre mi</a>
-    <a href="/blog">Ir al blog</a>
-    <hr />
-    <h1>Sobre mi!</h1>
+    <Navigation />
+
+    <h1>{pageTitle}</h1>
     <h3>Este es mi sitio en Astro!</h3>
     <p>
       Estoy trabajando en el tutorial brindado por Astro, en él realizaré una
       pagina de un blog al finalizar todo el recorrido .
     </p>
+
+    <p>He aquí unos datos sobre mí:</p>
+    <ul>
+      <li>Me llamo {identity.firtsName}</li>
+      <li>Vivo en: {identity.country} y trabajo como {identity.occupation}</li>
+      {
+        identity.hobbies.length >= 2 && (
+          <li>
+            Dos de mis aficiones son: {identity.hobbies[0]} y{" "}
+            {identity.hobbies[1]}
+          </li>
+        )
+      }
+    </ul>
+
+    <p>
+      Mis habilidades son:
+      {skills.map((skill) => <li class="skill"> {skill} </li>)}
+    </p>
+
+    {happy && <p>¡Estoy feliz de aprender Astro!</p>}
+    {finished && <p>¡He terminado este tutorial! </p>}
+    {
+      goal === 3 ? (
+        <p>Mi objetivo es terminar en 3 dias.</p>
+      ) : (
+        <p>Mi objetivo no son 3 dias.</p>
+      )
+    }
+    <Footer />
   </body>
 </html>
